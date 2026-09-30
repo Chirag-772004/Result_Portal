@@ -3,6 +3,8 @@ package com.net.bean;
 public class SubjectBean {
 	private String subjectcode;
 	private String subjectname;
+	private int semester;
+
 	public String getSubjectcode() {
 		return subjectcode;
 	}
@@ -15,5 +17,11 @@ public class SubjectBean {
 	public void setSubjectname(String subjectname) {
 		this.subjectname = subjectname;
 	}
-	
+	public int getSemester() {
+		return semester;
+	}
+	public void setSemester(int semester) {
+		this.semester = semester;
+	}
+
 }

@@ -45,4 +45,20 @@ public class MarksDAO {
         }
         return list;
     }
+
+    public MarksBean getMarks(long rollno, String subjectcode) throws SQLException {
+        String sql = "SELECT * FROM marks WHERE rollno = ? AND subjectcode = ?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setLong(1, rollno);
+        ps.setString(2, subjectcode);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            MarksBean m = new MarksBean();
+            m.setRollno(rs.getLong("rollno"));
+            m.setSubjectcode(rs.getString("subjectcode"));
+            m.setMarks(rs.getInt("marks"));
+            return m;
+        }
+        return null;
+    }
 }

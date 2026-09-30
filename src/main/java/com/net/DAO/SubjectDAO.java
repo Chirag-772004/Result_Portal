@@ -15,11 +15,12 @@ public class SubjectDAO {
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setString(1, subjectCode);
         ResultSet rs = ps.executeQuery();
-        
+
         if (rs.next()) {
             SubjectBean subject = new SubjectBean();
             subject.setSubjectcode(rs.getString("subjectcode"));
             subject.setSubjectname(rs.getString("subjectname"));
+            subject.setSemester(rs.getInt("semester"));
             return subject;
         }
         return null;

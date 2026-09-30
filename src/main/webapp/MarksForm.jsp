@@ -27,6 +27,21 @@
     boolean success = false;
     String message = "";
 
+    // Pre-populate marks if in update mode and not yet submitted
+    if (!formSubmitted && "update".equalsIgnoreCase(mode) && rollno != null && subjectcode != null) {
+        try {
+            Connection conn = DBConnection.getConnection();
+            MarksDAO marksDAO = new MarksDAO(conn);
+            MarksBean existingMarks = marksDAO.getMarks(Long.parseLong(rollno), subjectcode);
+            if (existingMarks != null) {
+                marksStr = String.valueOf(existingMarks.getMarks());
+            }
+            conn.close();
+        } catch (Exception e) {
+            message = "Error fetching existing marks: " + e.getMessage();
+        }
+    }
+
     if (formSubmitted) {
         try {
             long rno = Long.parseLong(rollno);

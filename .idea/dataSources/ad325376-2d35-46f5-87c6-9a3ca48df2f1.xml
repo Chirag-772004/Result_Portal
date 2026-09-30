@@ -6,7 +6,8 @@
       <DefaultCasing>lower/lower</DefaultCasing>
       <DefaultEngine>InnoDB</DefaultEngine>
       <DefaultTmpEngine>InnoDB</DefaultTmpEngine>
-      <Grants>|root||root|localhost|ALTER|G
+      <Grants>|root||root|localhost|ALLOW_NONEXISTENT_DEFINER|G
+|root||root|localhost|ALTER|G
 |root||root|localhost|ALTER ROUTINE|G
 |root||root|localhost|APPLICATION_PASSWORD_ADMIN|G
 |root||mysql.infoschema|localhost|AUDIT_ABORT_EXEMPT|G
@@ -31,6 +32,7 @@
 |root||root|localhost|CREATE TEMPORARY TABLES|G
 |root||root|localhost|CREATE USER|G
 |root||root|localhost|CREATE VIEW|G
+|root||root|localhost|CREATE_SPATIAL_REFERENCE_SYSTEM|G
 |root||root|localhost|DELETE|G
 |root||root|localhost|DROP|G
 |root||root|localhost|DROP ROLE|G
@@ -43,6 +45,7 @@
 |root||mysql.sys|localhost|FIREWALL_EXEMPT|G
 |root||root|localhost|FIREWALL_EXEMPT|G
 |root||root|localhost|FLUSH_OPTIMIZER_COSTS|G
+|root||root|localhost|FLUSH_PRIVILEGES|G
 |root||root|localhost|FLUSH_STATUS|G
 |root||root|localhost|FLUSH_TABLES|G
 |root||root|localhost|FLUSH_USER_RESOURCES|G
@@ -53,6 +56,8 @@
 |root||root|localhost|INNODB_REDO_LOG_ENABLE|G
 |root||root|localhost|INSERT|G
 |root||root|localhost|LOCK TABLES|G
+|root||root|localhost|MANAGE_DATA_MASKING_POLICY|G
+|root||root|localhost|OPTIMIZE_LOCAL_TABLE|G
 |root||root|localhost|PASSWORDLESS_USER_ADMIN|G
 |root||mysql.session|localhost|PERSIST_RO_VARIABLES_ADMIN|G
 |root||root|localhost|PERSIST_RO_VARIABLES_ADMIN|G
@@ -72,7 +77,7 @@
 |root||root|localhost|SERVICE_CONNECTION_ADMIN|G
 |root||mysql.session|localhost|SESSION_VARIABLES_ADMIN|G
 |root||root|localhost|SESSION_VARIABLES_ADMIN|G
-|root||root|localhost|SET_USER_ID|G
+|root||root|localhost|SET_ANY_DEFINER|G
 |root||root|localhost|SHOW DATABASES|G
 |root||root|localhost|SHOW VIEW|G
 |root||root|localhost|SHOW_ROUTINE|G
@@ -88,13 +93,32 @@
 |root||root|localhost|SYSTEM_VARIABLES_ADMIN|G
 |root||root|localhost|TABLE_ENCRYPTION_ADMIN|G
 |root||root|localhost|TELEMETRY_LOG_ADMIN|G
+|root||root|localhost|TRANSACTION_GTID_TAG|G
 |root||root|localhost|TRIGGER|G
 |root||root|localhost|UPDATE|G
 |root||root|localhost|XA_RECOVER_ADMIN|G
 |root||root|localhost|grant option|G
+geopathos|schema||geopathos|localhost|ALTER|G
+geopathos|schema||geopathos|localhost|ALTER ROUTINE|G
+geopathos|schema||geopathos|localhost|CREATE|G
+geopathos|schema||geopathos|localhost|CREATE ROUTINE|G
+geopathos|schema||geopathos|localhost|CREATE TEMPORARY TABLES|G
+geopathos|schema||geopathos|localhost|CREATE VIEW|G
+geopathos|schema||geopathos|localhost|DELETE|G
+geopathos|schema||geopathos|localhost|DROP|G
+geopathos|schema||geopathos|localhost|EVENT|G
+geopathos|schema||geopathos|localhost|EXECUTE|G
+geopathos|schema||geopathos|localhost|INDEX|G
+geopathos|schema||geopathos|localhost|INSERT|G
+geopathos|schema||geopathos|localhost|LOCK TABLES|G
+geopathos|schema||geopathos|localhost|REFERENCES|G
+geopathos|schema||geopathos|localhost|SELECT|G
+geopathos|schema||geopathos|localhost|SHOW VIEW|G
+geopathos|schema||geopathos|localhost|TRIGGER|G
+geopathos|schema||geopathos|localhost|UPDATE|G
 performance_schema|schema||mysql.session|localhost|SELECT|G
 sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
-      <ServerVersion>8.0.46</ServerVersion>
+      <ServerVersion>26.7.0</ServerVersion>
     </root>
     <collation id="2" parent="1" name="armscii8_bin">
       <Charset>armscii8</Charset>
@@ -995,196 +1019,211 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
     <collation id="287" parent="1" name="utf8mb4_zh_0900_as_cs">
       <Charset>utf8mb4</Charset>
     </collation>
-    <schema id="288" parent="1" name="information_schema">
+    <schema id="288" parent="1" name="bimodalpsyche">
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </schema>
+    <schema id="289" parent="1" name="geopathos">
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </schema>
+    <schema id="290" parent="1" name="information_schema">
       <CollationName>utf8mb3_general_ci</CollationName>
     </schema>
-    <schema id="289" parent="1" name="mysql">
+    <schema id="291" parent="1" name="memory">
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
-    <schema id="290" parent="1" name="performance_schema">
+    <schema id="292" parent="1" name="mysql">
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
-    <schema id="291" parent="1" name="result_portal">
+    <schema id="293" parent="1" name="performance_schema">
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </schema>
+    <schema id="294" parent="1" name="result_portal">
       <AutoIntrospectionLevel>3</AutoIntrospectionLevel>
       <LastIntrospectionLevel>3</LastIntrospectionLevel>
-      <LastIntrospectionLocalTimestamp>2026-07-04.19:01:18</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2026-09-30.11:47:17</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
-    <schema id="292" parent="1" name="sys">
+    <schema id="295" parent="1" name="simplestorage">
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
-    <user id="293" parent="1" name="mysql.infoschema">
+    <schema id="296" parent="1" name="sys">
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </schema>
+    <user id="297" parent="1" name="geopathos">
+      <Host>localhost</Host>
+    </user>
+    <user id="298" parent="1" name="mysql.infoschema">
       <CanLogin>0</CanLogin>
       <Host>localhost</Host>
     </user>
-    <user id="294" parent="1" name="mysql.session">
+    <user id="299" parent="1" name="mysql.session">
       <CanLogin>0</CanLogin>
       <Host>localhost</Host>
     </user>
-    <user id="295" parent="1" name="mysql.sys">
+    <user id="300" parent="1" name="mysql.sys">
       <CanLogin>0</CanLogin>
       <Host>localhost</Host>
     </user>
-    <user id="296" parent="1" name="root">
+    <user id="301" parent="1" name="root">
       <Host>localhost</Host>
     </user>
-    <table id="297" parent="291" name="admin">
+    <table id="302" parent="294" name="admin">
       <DetailsLevel>3</DetailsLevel>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="298" parent="291" name="marks">
+    <table id="303" parent="294" name="marks">
       <DetailsLevel>3</DetailsLevel>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="299" parent="291" name="student">
+    <table id="304" parent="294" name="student">
       <DetailsLevel>3</DetailsLevel>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="300" parent="291" name="subject">
+    <table id="305" parent="294" name="subject">
       <DetailsLevel>3</DetailsLevel>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <column id="301" parent="297" name="username">
+    <column id="306" parent="302" name="username">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>varchar(50)|0s</StoredType>
     </column>
-    <column id="302" parent="297" name="password">
+    <column id="307" parent="302" name="password">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <index id="303" parent="297" name="PRIMARY">
+    <index id="308" parent="302" name="PRIMARY">
       <ColNames>username</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="304" parent="297" name="PRIMARY">
+    <key id="309" parent="302" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <check id="305" parent="298" name="marks_chk_1">
+    <check id="310" parent="303" name="marks_chk_1">
       <NameSurrogate>1</NameSurrogate>
       <Predicate>`marks` between 0 and 100</Predicate>
     </check>
-    <column id="306" parent="298" name="rollno">
+    <column id="311" parent="303" name="rollno">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>bigint|0s</StoredType>
     </column>
-    <column id="307" parent="298" name="subjectcode">
+    <column id="312" parent="303" name="subjectcode">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(20)|0s</StoredType>
     </column>
-    <column id="308" parent="298" name="marks">
+    <column id="313" parent="303" name="marks">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <foreign-key id="309" parent="298" name="marks_ibfk_1">
+    <foreign-key id="314" parent="303" name="marks_ibfk_1">
       <ColNames>rollno</ColNames>
       <OnDelete>cascade</OnDelete>
       <RefColNames>rollno</RefColNames>
       <RefTableName>student</RefTableName>
     </foreign-key>
-    <foreign-key id="310" parent="298" name="marks_ibfk_2">
+    <foreign-key id="315" parent="303" name="marks_ibfk_2">
       <ColNames>subjectcode</ColNames>
       <OnDelete>cascade</OnDelete>
       <RefColNames>subjectcode</RefColNames>
       <RefTableName>subject</RefTableName>
     </foreign-key>
-    <index id="311" parent="298" name="PRIMARY">
+    <index id="316" parent="303" name="PRIMARY">
       <ColNames>rollno
 subjectcode</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="312" parent="298" name="subjectcode">
+    <index id="317" parent="303" name="subjectcode">
       <ColNames>subjectcode</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="313" parent="298" name="PRIMARY">
+    <key id="318" parent="303" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <check id="314" parent="299" name="student_chk_1">
+    <check id="319" parent="304" name="student_chk_1">
       <NameSurrogate>1</NameSurrogate>
       <Predicate>`semester` between 1 and 8</Predicate>
     </check>
-    <column id="315" parent="299" name="rollno">
+    <column id="320" parent="304" name="rollno">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>bigint|0s</StoredType>
     </column>
-    <column id="316" parent="299" name="name">
+    <column id="321" parent="304" name="name">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="317" parent="299" name="fathername">
+    <column id="322" parent="304" name="fathername">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="318" parent="299" name="mothername">
+    <column id="323" parent="304" name="mothername">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="319" parent="299" name="dob">
+    <column id="324" parent="304" name="dob">
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StoredType>date|0s</StoredType>
     </column>
-    <column id="320" parent="299" name="semester">
+    <column id="325" parent="304" name="semester">
       <NotNull>1</NotNull>
       <Position>6</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="321" parent="299" name="year">
+    <column id="326" parent="304" name="year">
       <NotNull>1</NotNull>
       <Position>7</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="322" parent="299" name="course">
+    <column id="327" parent="304" name="course">
       <DefaultExpression>&apos;Bachelor Of Technology&apos;</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>8</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <index id="323" parent="299" name="PRIMARY">
+    <index id="328" parent="304" name="PRIMARY">
       <ColNames>rollno</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="324" parent="299" name="PRIMARY">
+    <key id="329" parent="304" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="325" parent="300" name="subjectcode">
+    <column id="330" parent="305" name="subjectcode">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>varchar(20)|0s</StoredType>
     </column>
-    <column id="326" parent="300" name="subjectname">
+    <column id="331" parent="305" name="subjectname">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <index id="327" parent="300" name="PRIMARY">
+    <index id="332" parent="305" name="PRIMARY">
       <ColNames>subjectcode</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="328" parent="300" name="PRIMARY">
+    <key id="333" parent="305" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>

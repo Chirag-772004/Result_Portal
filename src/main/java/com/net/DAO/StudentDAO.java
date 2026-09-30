@@ -49,7 +49,7 @@ public class StudentDAO {
 
 	
 	public boolean updateStudent(StudentBean student) throws SQLException {
-	    String sql = "UPDATE student SET name=?, fathername=?, mothername=?, dob=?, semester=?, year=? WHERE rollno=?";
+	    String sql = "UPDATE student SET name=?, fathername=?, mothername=?, dob=?, semester=?, year=?, course=? WHERE rollno=?";
 	    PreparedStatement ps = conn.prepareStatement(sql);
 	    ps.setString(1, student.getName());
 	    ps.setString(2, student.getFathername());
@@ -57,7 +57,8 @@ public class StudentDAO {
 	    ps.setDate(4, student.getDob());
 	    ps.setInt(5, student.getSemester());
 	    ps.setInt(6, student.getYear());
-	    ps.setLong(7, student.getRollno());
+	    ps.setString(7, student.getCourse());
+	    ps.setLong(8, student.getRollno());
 	    return ps.executeUpdate() > 0;
 	}
 	

@@ -47,11 +47,17 @@
         <tr>
           <td class="p-2 border"><%= rs.getLong("rollno") %></td>
           <td class="p-2 border"><%= rs.getString("name") %></td>
-          <td class="p-2 border text-center">
-            <form action="UpdateStudent.jsp" method="get">
+          <td class="p-2 border text-center space-x-2">
+            <form action="UpdateStudent.jsp" method="get" class="inline">
               <input type="hidden" name="rollno" value="<%= rs.getLong("rollno") %>">
               <button type="submit" class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700">
                 Update
+              </button>
+            </form>
+            <form action="DeleteStudent.jsp" method="get" class="inline">
+              <input type="hidden" name="rollno" value="<%= rs.getLong("rollno") %>">
+              <button type="submit" class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">
+                Delete
               </button>
             </form>
           </td>
