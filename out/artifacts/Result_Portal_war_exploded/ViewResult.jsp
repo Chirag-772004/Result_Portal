@@ -1,4 +1,4 @@
-<%@ page import="com.net.DAO.MarksDAO,java.sql.Connection, com.net.DAO.SubjectDAO, com.net.bean.MarksBean, com.net.bean.SubjectBean, com.net.util.DBConnection" %>
+<%@ page import="com.net.DAO.MarksDAO,java.sql.Connection, com.net.DAO.SubjectDAO, com.net.bean.MarksBean, com.net.bean.SubjectBean, com.net.util.DBConnection, java.util.ArrayList, java.util.Map" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
     session.setMaxInactiveInterval(300);
@@ -17,11 +17,35 @@
         return;
     }
 
-    Connection conn = DBConnection.getConnection();
-    MarksDAO marksDAO = new MarksDAO(conn);
-    SubjectDAO subjectDAO = new SubjectDAO(conn);
+    Connection conn = null;
+    java.util.List<MarksBean> marksList = null;
+    String errorMessage = null;
+    Map<String, String> subjectMap = new java.util.HashMap<>();
 
-    java.util.List<MarksBean> marksList = marksDAO.getMarksByRollNo(Long.parseLong(studentUser));
+    try {
+        conn = DBConnection.getConnection();
+        MarksDAO marksDAO = new MarksDAO(conn);
+        SubjectDAO subjectDAO = new SubjectDAO(conn);
+
+        marksList = marksDAO.getMarksByRollNo(Long.parseLong(studentUser));
+
+        // Fetch all subjects into a map to avoid connection issues
+        java.sql.ResultSet subjectsRs = subjectDAO.getAllSubjects();
+        while (subjectsRs.next()) {
+            subjectMap.put(subjectsRs.getString("subjectcode"), subjectsRs.getString("subjectname"));
+        }
+    } catch (Exception e) {
+        errorMessage = "Error loading results: " + e.getMessage();
+        e.printStackTrace();
+    } finally {
+        if (conn != null) {
+            try {
+                conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 %>
 
 <!DOCTYPE html>
@@ -36,7 +60,9 @@
   <div class="max-w-2xl mx-auto mt-10 bg-white p-6 rounded shadow">
     <h2 class="text-2xl font-bold mb-4 text-center text-blue-600">Your Result</h2>
 
-    <% if (marksList != null && !marksList.isEmpty()) { %>
+    <% if (errorMessage != null) { %>
+      <p class="text-center text-red-500"><%= errorMessage %></p>
+    <% } else if (marksList != null && !marksList.isEmpty()) { %>
     <table class="w-full border border-gray-300">
       <thead class="bg-blue-100">
         <tr>
@@ -46,13 +72,13 @@
         </tr>
       </thead>
       <tbody>
-      <% 
-        for (MarksBean mark : marksList) { 
-            SubjectBean subject = subjectDAO.getSubject(mark.getSubjectcode());
+      <%
+        for (MarksBean mark : marksList) {
+            String subjectName = subjectMap.get(mark.getSubjectcode());
       %>
         <tr>
           <td class="border border-gray-300 p-2"><%= mark.getSubjectcode() %></td>
-          <td class="border border-gray-300 p-2"><%= subject != null ? subject.getSubjectname() : "N/A" %></td>
+          <td class="border border-gray-300 p-2"><%= subjectName != null ? subjectName : "N/A" %></td>
           <td class="border border-gray-300 p-2"><%= mark.getMarks() %></td>
         </tr>
       <% } %>

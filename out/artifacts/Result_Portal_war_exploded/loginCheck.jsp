@@ -25,6 +25,7 @@
 
             if (student != null && student.getDob().toString().equals(password)) {
                 isStudent = true;
+                session.setAttribute("studentName", student.getName());
             }
         }
 

@@ -37,6 +37,7 @@
       <a href="DeleteMarks.jsp" class="hover:underline">Delete Marks</a>
       <a href="ViewStudents.jsp" class="hover:underline">View Students</a>
       <a href="ViewSubjects.jsp" class="hover:underline">View Subjects</a>
+      <a href="Login.jsp" class="hover:underline">Logout</a>
     </div>
   </nav>
 

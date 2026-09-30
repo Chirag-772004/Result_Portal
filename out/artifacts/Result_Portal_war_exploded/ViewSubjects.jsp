@@ -21,7 +21,8 @@
     int semester = semesterParam != null ? Integer.parseInt(semesterParam) : 4;
 
     Connection conn = DBConnection.getConnection();
-    PreparedStatement ps = conn.prepareStatement("SELECT subjectcode, subjectname FROM subject");
+    PreparedStatement ps = conn.prepareStatement("SELECT subjectcode, subjectname FROM subject WHERE semester = ?");
+    ps.setInt(1, semester);
     ResultSet rs = ps.executeQuery();
 %>
 

@@ -1,4 +1,4 @@
-<%@ page import="com.net.DAO.MarksDAO,java.sql.Connection, com.net.bean.MarksBean, com.net.util.DBConnection" %>
+<%@ page import="com.net.DAO.MarksDAO,java.sql.Connection, com.net.bean.MarksBean, com.net.util.DBConnection, com.net.DAO.SubjectDAO, java.sql.ResultSet, java.util.ArrayList, java.util.Map" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
     session.setMaxInactiveInterval(300);
@@ -26,6 +26,23 @@
     boolean formSubmitted = "POST".equalsIgnoreCase(request.getMethod());
     boolean success = false;
     String message = "";
+
+    // Fetch all subjects for dropdown and store in list
+    ArrayList<Map<String, String>> subjectsList = new ArrayList<>();
+    try {
+        Connection conn = DBConnection.getConnection();
+        SubjectDAO subjectDAO = new SubjectDAO(conn);
+        ResultSet subjectsRs = subjectDAO.getAllSubjects();
+        while (subjectsRs.next()) {
+            Map<String, String> subject = new java.util.HashMap<>();
+            subject.put("code", subjectsRs.getString("subjectcode"));
+            subject.put("name", subjectsRs.getString("subjectname"));
+            subjectsList.add(subject);
+        }
+        conn.close();
+    } catch (Exception e) {
+        message = "Error fetching subjects: " + e.getMessage();
+    }
 
     // Pre-populate marks if in update mode and not yet submitted
     if (!formSubmitted && "update".equalsIgnoreCase(mode) && rollno != null && subjectcode != null) {
@@ -101,11 +118,25 @@
           </div>
 
           <div>
-            <label class="block font-semibold">Subject Code</label>
-            <input type="text" name="subjectcode" required
-                   value="<%= subjectcode != null ? subjectcode : "" %>"
-                   <%= "update".equalsIgnoreCase(mode) ? "readonly" : "" %>
-                   class="w-full border border-gray-300 rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <label class="block font-semibold">Subject</label>
+            <select name="subjectcode" required
+                    <%= "update".equalsIgnoreCase(mode) ? "disabled" : "" %>
+                    class="w-full border border-gray-300 rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <option value="">-- Select Subject --</option>
+              <%
+                for (Map<String, String> subject : subjectsList) {
+                  String scode = subject.get("code");
+                  String sname = subject.get("name");
+                  boolean selected = subjectcode != null && subjectcode.equals(scode);
+              %>
+                <option value="<%= scode %>" <%= selected ? "selected" : "" %>><%= sname %> (<%= scode %>)</option>
+              <%
+                }
+              %>
+            </select>
+            <% if ("update".equalsIgnoreCase(mode)) { %>
+              <input type="hidden" name="subjectcode" value="<%= subjectcode != null ? subjectcode : "" %>">
+            <% } %>
           </div>
 
           <div>
